@@ -11,7 +11,7 @@ import (
 )
 
 func (app *application) homeHandler(w http.ResponseWriter, r *http.Request) {
-	tmp, err := template.ParseFiles("./ui/home.html")
+	tmp, err := template.ParseFiles("./ui/beerHome.html")
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
@@ -85,7 +85,7 @@ func (app *application) buyerRegistration(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	w.Write([]byte(fmt.Sprintf("%s %s Inserted Successfully",fname,lname)));
+	w.Write([]byte(fmt.Sprintf("%s %s Inserted Successfully", fname, lname)))
 
 }
 
@@ -182,50 +182,49 @@ func (app *application) beerUpdateHandler(w http.ResponseWriter, r *http.Request
 		log.Fatal(err) // 5 8160 false
 	}
 
-	w.Write([]byte(fmt.Sprintf("%s Updated Successfully",beer_name)));
+	w.Write([]byte(fmt.Sprintf("%s Updated Successfully", beer_name)))
 
 }
 
 func (app *application) deleteFormHandler(w http.ResponseWriter, r *http.Request) {
-	tmp,err := template.ParseFiles("./ui/beer_delete_form.html");
+	tmp, err := template.ParseFiles("./ui/beer_delete_form.html")
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		log.Fatal(err)
-		return;
+		return
 	}
-	err = tmp.Execute(w,nil);
+	err = tmp.Execute(w, nil)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		log.Fatal(err)
-		return;
+		return
 	}
 
 }
 
 func (app *application) deleteBeerHandler(w http.ResponseWriter, r *http.Request) {
 
-	 err := r.ParseForm()
-	 if err != nil {
+	err := r.ParseForm()
+	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		log.Fatal(err)
-		return;
-	 }
+		return
+	}
 
-	 beer_name := r.PostForm.Get("beername");
+	beer_name := r.PostForm.Get("beername")
 
-	 delete := `
+	delete := `
 	 delete from "202001213_db"."Beer"
 	 where "beer_name"=$1
      `
-	 _,err = app.db.Query(delete,beer_name);
+	_, err = app.db.Query(delete, beer_name)
 
-	 if err != nil {
+	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		log.Fatal(err)
-		return;
-	 }
+		return
+	}
 
-	 w.Write([]byte(fmt.Sprintf("%s Deleted Successfully",beer_name)));
-	
+	w.Write([]byte(fmt.Sprintf("%s Deleted Successfully", beer_name)))
 
 }

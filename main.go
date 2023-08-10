@@ -28,7 +28,7 @@ func setup() (*sql.DB, error) {
 		host     = "localhost"
 		port     = 8080
 		user     = "postgres"
-		password = "Maher@5050"
+		password = "maher"
 		dbname   = "postgres"
 	)
 
